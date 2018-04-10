@@ -1234,19 +1234,19 @@ void fillHistos::fillBasic(basicHistos *h)
     int i0 = (gen_ptorder.begin())->second;
     int i1 = (++gen_ptorder.begin())->second;
 	
-	for (int k = 0; k != njt; ++k) {
-		double idx = -jtpt[k]; // note minus
-		while (ptorder.find(idx) != ptorder.end()) idx += 1e-5*jteta[k];
-		assert(ptorder.find(idx)==ptorder.end());
-		ptorder[idx] = k;
-	}
+    for (int k = 0; k != njt; ++k) {
+      double idx = -jtpt[k]; // note minus
+      while (ptorder.find(idx) != ptorder.end()) idx += 1e-5*jteta[k];
+      assert(ptorder.find(idx)==ptorder.end());
+      ptorder[idx] = k;
+    }
 	
-	int k0 = (ptorder.begin())->second;
+    int k0 = (ptorder.begin())->second;
     int k1 = (++ptorder.begin())->second;
 	
 	
     
-	//GEN-LEVEL calculation
+     //GEN-LEVEL calculation
     _j1_gen.SetPtEtaPhiE(gen_jtpt[i0],gen_jteta[i0],gen_jtphi[i0],gen_jte[i0]);
     _j2_gen.SetPtEtaPhiE(gen_jtpt[i1],gen_jteta[i1],gen_jtphi[i1],gen_jte[i1]);
     
@@ -1264,13 +1264,13 @@ void fillHistos::fillBasic(basicHistos *h)
     bool reco_id  = (_pass && _evtid && goodmass && _jetids[k0] && _jetids[k1]);
     
     //Matching gen-reco with dR
-	double leading_dr = tools::oplus(delta_phi(gen_jtphi[i0], jtphi[k0]), fabs(gen_jteta[i0] - jteta[k0]));
-	double subleading_dr = tools::oplus(delta_phi(gen_jtphi[i1], jtphi[k1]), fabs(gen_jteta[i1] - jteta[k1]));
+    double leading_dr = tools::oplus(delta_phi(gen_jtphi[i0], jtphi[k0]), fabs(gen_jteta[i0] - jteta[k0]));
+    double subleading_dr = tools::oplus(delta_phi(gen_jtphi[i1], jtphi[k1]), fabs(gen_jteta[i1] - jteta[k1]));
                                    
 	
-	// Filling response matrix 
+    // Filling response matrix 
 	
-	if ((gen_goodmass && gen_ymaxdj >= h->ymin && gen_ymaxdj < h->ymax) && (reco_id && goodmass && ymaxdj >= h->ymin && ymaxdj < h->ymax ) && (leading_dr < 0.2 && subleading_dr < 0.2)) {
+    if ((gen_goodmass && gen_ymaxdj >= h->ymin && gen_ymaxdj < h->ymax) && (reco_id && goodmass && ymaxdj >= h->ymin && ymaxdj < h->ymax ) && (leading_dr < 0.2 && subleading_dr < 0.2)) {
       
       assert(h->matrix_gen_reco);
       h->matrix_gen_reco->Fill(gen_djmass, djmass, _w);
