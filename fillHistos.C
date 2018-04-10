@@ -1197,19 +1197,7 @@ void fillHistos::fillBasic(basicHistos *h)
       assert(h->gen_hdjmass0);
       h->gen_hdjmass0->Fill(gen_djmass, _w);
       
-      /*assert(h->pdjmass_ptratio);
-      h->pdjmass_ptratio->Fill(djmass, _j1.Pt()/_j2.Pt(), _w);
-      
-      assert(h->pdjmass0_ptratio);
-      h->pdjmass0_ptratio->Fill(djmass, _j1.Pt()/_j2.Pt(), _w);*/
-      
-      /// Leading/Subleading jet Pt of dijet system ////
-	  assert(h->gen_hdj_leading);
-      h->gen_hdj_leading->Fill(_j1_gen.Pt(), _w);
-	  
-	  assert(h->gen_hdj_subleading);
-      h->gen_hdj_subleading->Fill(_j2_gen.Pt(), _w);
-    }
+     }
 
   } //  GEN-LEVEL dijet mass
   
