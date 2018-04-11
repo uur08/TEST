@@ -1206,9 +1206,9 @@ void fillHistos::fillBasic(basicHistos *h)
   
   if (gen_njt>=2 && _jp_ismc && njt>=2) { 
   
-	double leading_dr, subleading_dr;
+    double leading_dr, subleading_dr;
     leading_dr=0;
-	subleading_dr=0;
+    subleading_dr=0;
 	
 
     // Find leading jets (residual JEC may change ordering)
@@ -1230,7 +1230,7 @@ void fillHistos::fillBasic(basicHistos *h)
     _j1_gen.SetPtEtaPhiE(gen_jtpt[i0],gen_jteta[i0],gen_jtphi[i0],gen_jte[i0]);
     _j2_gen.SetPtEtaPhiE(gen_jtpt[i1],gen_jteta[i1],gen_jtphi[i1],gen_jte[i1]);
 	
-	double gen_djmass = (_j1_gen+_j2_gen).M();
+    double gen_djmass = (_j1_gen+_j2_gen).M();
     double gen_ymaxdj = max(fabs(gen_jty[i0]),fabs(gen_jty[i1]));
     bool gen_goodmass = (gen_jtpt[i0]>30. && gen_jtpt[i1]>30.);
 	
@@ -1238,7 +1238,7 @@ void fillHistos::fillBasic(basicHistos *h)
 	//Pairing every reco jet to each other in the event without using ordering map
 	for (int j = 0; j != njt; ++j) { // first reco jet
 
-    _j1.SetPtEtaPhiE(jtpt[j],jteta[j],jtphi[j],jte[j]);
+             _j1.SetPtEtaPhiE(jtpt[j],jteta[j],jtphi[j],jte[j]);
      
 	     for (int k = 0; k != njt; ++k) { // second reco jet
 		 
@@ -1249,26 +1249,19 @@ void fillHistos::fillBasic(basicHistos *h)
 			double djmass = (_j1+_j2).M();
 			double ymaxdj = max(fabs(jty[j]),fabs(jty[k]));
 			bool goodmass = (jtpt[j]>30. && jtpt[k]>30.);
-		    bool reco_id  = (_pass && _evtid && goodmass && _jetids[j] && _jetids[k]);
+		        bool reco_id  = (_pass && _evtid && goodmass && _jetids[j] && _jetids[k]);
     
-	        //Matching gen-reco with dR
+	                //Matching gen-reco with dR
 			//We are apperantly double counting reco mass!!! Lets say jet[j],jet[k] pair passes every condition and fills the histo.jet[k],jet[j] pair will do the same! 
 			//For preventing double counting reco mass, we can determine leading and subleading jet once. If they are reversed in the loop we can just skip this pair without filling.
 			
 			if (jtpt[j] >  jtpt[k]){
 			leading_dr = tools::oplus(delta_phi(gen_jtphi[i0], jtphi[j]), fabs(gen_jteta[i0] - jteta[j]));
 			subleading_dr = tools::oplus(delta_phi(gen_jtphi[i1], jtphi[k]), fabs(gen_jteta[i1] - jteta[k]));
-			cout << "Event "<<_entry<<"----->"<<" Dijet pair"<<"("<<j<<","<<k<<")"<<endl;
-			cout << "ACCEPTED" << endl;
-			cout << "************"<< endl;
-			cout << endl;
-            }else {
+			}else {
 			leading_dr = 1.0;	//For skipping reversed dijet pair	
-			subleading_dr = 1.0; //For skipping reversed dijet pair
-			cout << "Event "<<_entry<<"----->"<<" Dijet pair"<<"("<<j<<","<<k<<")"<<endl;
-			cout << "REJECTED" << endl;
-			cout << "************"<< endl;
-			cout << endl;
+			subleading_dr = 1.0;    //For skipping reversed dijet pair
+			
 			}
 			
 			// Filling response matrix 
@@ -1285,7 +1278,7 @@ void fillHistos::fillBasic(basicHistos *h)
 					cout << "+++++++++++++++++++++++++++++++++++++++++++" << endl;
 					cout << endl;
 					cout << endl;
-				    }
+				        }
 					
 					assert(h->matrix_gen_reco);
 					h->matrix_gen_reco->Fill(gen_djmass, djmass, _w);
